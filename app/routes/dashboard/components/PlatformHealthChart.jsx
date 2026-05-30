@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Card, Button } from "@/components/ui";
 import { MONTHS, CHART_VALUES } from "../constants";
 

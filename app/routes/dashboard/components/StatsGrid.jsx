@@ -1,4 +1,3 @@
-import * as React from "react";
 import { StatsCard } from "@/components/ui";
 import { DASHBOARD_STATS } from "../constants";
 

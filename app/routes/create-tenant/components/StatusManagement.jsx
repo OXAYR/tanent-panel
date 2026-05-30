@@ -1,23 +1,43 @@
-import * as React from "react";
 import { Label } from "@/components/ui";
 import { cn } from "@/lib/utils";
-
 import { STATUS_OPTIONS } from "../constants";
+import { fieldError } from "@/lib/field-error";
 
-export function StatusManagement({ formData, setFormData }) {
+export function StatusManagement({
+  showErrors = false,
+  values,
+  errors,
+  touched,
+  setFieldValue,
+  setFieldTouched,
+}) {
+  const errorOpts = { showErrors };
   return (
     <div className="space-y-6">
       <div className="max-w-md space-y-4">
         <Label>Current Status</Label>
         <div className="grid grid-cols-1 gap-3">
           {STATUS_OPTIONS.map((s) => (
-            <div 
+            <div
               key={s.value}
+              role="button"
+              tabIndex={0}
               className={cn(
                 "p-4 rounded-xl border-2 cursor-pointer transition-all flex items-start gap-4",
-                formData.status === s.value ? "border-primary bg-primary/5" : "border-slate-100 hover:border-slate-200"
+                values.status === s.value
+                  ? "border-primary bg-primary/5"
+                  : "border-slate-100 hover:border-slate-200"
               )}
-              onClick={() => setFormData({...formData, status: s.value})}
+              onClick={() => {
+                setFieldValue("status", s.value);
+                setFieldTouched("status", true);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  setFieldValue("status", s.value);
+                  setFieldTouched("status", true);
+                }
+              }}
             >
               <div className={cn("w-3 h-3 rounded-full mt-1.5", s.color)} />
               <div>
@@ -27,6 +47,9 @@ export function StatusManagement({ formData, setFormData }) {
             </div>
           ))}
         </div>
+        {fieldError(errors, touched, "status", errorOpts) && (
+          <p className="text-xs text-red-500">{fieldError(errors, touched, "status", errorOpts)}</p>
+        )}
       </div>
     </div>
   );

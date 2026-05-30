@@ -9,6 +9,7 @@ import {
 
 import "./app.css";
 import { Provider } from "react-redux";
+import { Toaster } from "sonner";
 import { store } from "./store/store";
 
 export const links = () => [
@@ -36,6 +37,7 @@ export function Layout({ children }) {
       <body>
         <Provider store={store}>
           {children}
+          <Toaster position="top-right" richColors closeButton />
         </Provider>
         <ScrollRestoration />
         <Scripts />

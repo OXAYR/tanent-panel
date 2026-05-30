@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Card, DataTable } from "@/components/ui";
 import { LOG_COLUMNS } from "../constants";
 

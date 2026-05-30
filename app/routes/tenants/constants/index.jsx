@@ -1,7 +1,8 @@
-import * as React from "react";
+import { Link } from "react-router";
 import { Edit2 } from "lucide-react";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { buildCreateTenantSearch } from "@/routes/create-tenant/utils";
 
 export const TENANT_COLUMNS = [
   {
@@ -41,6 +42,16 @@ export const TENANT_COLUMNS = [
     cell: ({ row }) => <span className="text-slate-500">{row.getValue("plan")}</span>,
   },
   {
+    accessorKey: "brand_name",
+    header: "Brand",
+    cell: ({ row }) => <span className="text-slate-500">{row.getValue("brand_name")}</span>,
+  },
+  {
+    accessorKey: "domain",
+    header: "Domain",
+    cell: ({ row }) => <span className="text-slate-500">{row.getValue("domain")}</span>,
+  },
+  {
     accessorKey: "date",
     header: "Created At",
     cell: ({ row }) => <span className="text-slate-400">{row.getValue("date")}</span>,
@@ -48,22 +59,32 @@ export const TENANT_COLUMNS = [
   {
     id: "actions",
     header: () => <div className="text-right">Actions</div>,
-    cell: () => (
-      <div className="text-right">
-        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-primary-600">
-          <Edit2 size={14} />
-        </Button>
-      </div>
-    ),
-  },
-];
+    cell: ({ row }) => {
+      const tenantId = row.original.id;
+      if (!tenantId) return null;
 
-export const TENANT_DATA = [
-  { name: "Sociable Tech", status: "Active", plan: "Enterprise", date: "Oct 12, 2025" },
-  { name: "Global Logistics", status: "Active", plan: "Business", date: "Nov 05, 2025" },
-  { name: "Horizon Media", status: "Suspended", plan: "Starter", date: "Dec 20, 2025" },
-  { name: "Nova Systems", status: "Active", plan: "Enterprise", date: "Jan 14, 2026" },
-  { name: "Peak Solutions", status: "Pending", plan: "Business", date: "Feb 02, 2026" },
+      return (
+        <div className="text-right">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-slate-400 hover:text-primary-600"
+            asChild
+          >
+            <Link
+              to={buildCreateTenantSearch({
+                tenantId,
+                stepId: "tenant-profile",
+              })}
+              aria-label={`Edit ${row.original.name}`}
+            >
+              <Edit2 size={14} />
+            </Link>
+          </Button>
+        </div>
+      );
+    },
+  },
 ];
 
 export const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];

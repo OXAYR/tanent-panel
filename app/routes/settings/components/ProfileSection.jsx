@@ -1,9 +1,14 @@
-import * as React from "react";
 import { User } from "lucide-react";
-import { Card, Button, Input, Label } from "@/components/ui";
-import { ACCOUNT_INFO } from "../constants";
+import { Card, Input, Label } from "@/components/ui";
+import { useMeQuery } from "@/store/api/authApi";
+import { getProfileDisplayName } from "../utils/user";
 
 export function ProfileSection() {
+  const { data: user, isLoading, isError } = useMeQuery();
+
+  const name = getProfileDisplayName(user);
+  const email = user?.email ?? user?.login ?? "";
+
   return (
     <Card className="p-6 rounded-xl border border-slate-100 max-w-2xl">
       <div className="space-y-6">
@@ -12,33 +17,52 @@ export function ProfileSection() {
             <User size={36} />
           </div>
           <div className="text-center sm:text-left">
-            <Button variant="outline" size="sm">Change Photo</Button>
+            <p className="text-sm font-medium text-slate-700">Profile photo</p>
+            <p className="text-xs text-slate-400 mt-1">View only — managed by your administrator.</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="name" className="text-slate-500 text-xs font-medium">Full Name</Label>
-            <Input 
-              id="name" 
-              value={ACCOUNT_INFO.name} 
-              disabled 
-              className="bg-slate-50/50 border-slate-100 text-slate-700"
-            />
+        {isLoading && (
+          <p className="text-sm text-slate-400">Loading account details…</p>
+        )}
+
+        {isError && (
+          <p className="text-sm text-red-600">Unable to load account details. Please try again later.</p>
+        )}
+
+        {!isLoading && !isError && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="name" className="text-slate-500 text-xs font-medium">
+                Full Name
+              </Label>
+              <Input
+                id="name"
+                value={name}
+                readOnly
+                disabled
+                className="bg-slate-50/50 border-slate-100 text-slate-700"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="email" className="text-slate-500 text-xs font-medium">
+                Email Address
+              </Label>
+              <Input
+                id="email"
+                value={email}
+                readOnly
+                disabled
+                className="bg-slate-50/50 border-slate-100 text-slate-700"
+              />
+            </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="email" className="text-slate-500 text-xs font-medium">Email Address</Label>
-            <Input 
-              id="email" 
-              value={ACCOUNT_INFO.email} 
-              disabled 
-              className="bg-slate-50/50 border-slate-100 text-slate-700"
-            />
-          </div>
-        </div>
+        )}
 
         <div className="pt-4 border-t border-slate-100">
-          <p className="text-xs text-slate-400">Note: Name and Email can only be updated by the System Administrator.</p>
+          <p className="text-xs text-slate-400">
+            Account information is read-only. Updates must be made by a system administrator.
+          </p>
         </div>
       </div>
     </Card>

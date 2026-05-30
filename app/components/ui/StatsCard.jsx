@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Card } from "@/components/ui/card";
 
 export function StatsCard({ title, value, trend, icon }) {

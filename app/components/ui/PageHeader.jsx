@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Fragment } from "react";
 
 export function PageHeader({ title, subtitle, action, breadcrumbs }) {
   return (
@@ -6,10 +6,10 @@ export function PageHeader({ title, subtitle, action, breadcrumbs }) {
       {breadcrumbs && (
         <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
           {breadcrumbs.map((crumb, idx) => (
-            <React.Fragment key={idx}>
+            <Fragment key={idx}>
               <span className={idx === breadcrumbs.length - 1 ? "text-slate-600" : ""}>{crumb}</span>
               {idx < breadcrumbs.length - 1 && <span className="opacity-40">/</span>}
-            </React.Fragment>
+            </Fragment>
           ))}
         </div>
       )}

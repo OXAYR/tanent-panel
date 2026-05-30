@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useOutletContext } from "react-router";
 import { TenantOverviewContent, TenantListingContent } from "./components";
 

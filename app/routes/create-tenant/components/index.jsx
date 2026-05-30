@@ -5,3 +5,5 @@ export * from "./AccessControl";
 export * from "./StatusManagement";
 export * from "./PlanManagement";
 export * from "./AdministratorAccount";
+export * from "./LogoDropzone";
+export * from "./FileDropzone";

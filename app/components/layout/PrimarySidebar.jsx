@@ -1,4 +1,3 @@
-import * as React from "react";
 import { 
   LayoutDashboard, 
   Users, 
@@ -7,6 +6,7 @@ import {
   Settings
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CREATE_TENANT_STEPS } from "@/routes/create-tenant/constants";
 
 function SidebarIcon({ icon, label, active = false, onClick }) {
   return (
@@ -77,7 +77,7 @@ export function PrimarySidebar({ activePrimary, setActivePrimary, setActiveSecon
           active={activePrimary === "Create Tenant"} 
           onClick={() => {
             setActivePrimary("Create Tenant");
-            setActiveSecondary("Tenant Profile");
+            setActiveSecondary(CREATE_TENANT_STEPS.TENANT_PROFILE);
           }}
         />
         <SidebarIcon 

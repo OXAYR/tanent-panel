@@ -11,16 +11,15 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-function StepItem({ label, completed, active, disabled, onClick }) {
+function StepItem({ label, completed, active, onClick }) {
   return (
     <div 
       className={cn(
         "flex items-center gap-3 px-3 py-3 rounded-xl cursor-pointer transition-all duration-200",
-        active ? "bg-primary/5 text-primary" : "text-slate-500",
-        disabled ? "opacity-40 cursor-not-allowed grayscale" : "hover:bg-slate-50",
+        active ? "bg-primary/5 text-primary" : "text-slate-500 hover:bg-slate-50",
         active && "ring-1 ring-primary/20"
       )} 
-      onClick={!disabled ? onClick : undefined}
+      onClick={onClick}
     >
       <div className="flex-shrink-0 relative">
         {completed ? (
@@ -37,8 +36,7 @@ function StepItem({ label, completed, active, disabled, onClick }) {
       </div>
       <span className={cn(
         "text-sm font-medium",
-        active ? "text-primary" : "text-slate-600",
-        disabled && "text-slate-400"
+        active ? "text-primary" : "text-slate-600"
       )}>
         {label}
       </span>
@@ -68,7 +66,8 @@ export function SecondarySidebar({
   activeSecondary,
   setActiveSecondary,
   setIsMobileMenuOpen,
-  tenantSteps = []
+  tenantSteps = [],
+  goToCreateTenantStep,
 }) {
   return (
     <aside className="w-[220px] lg:w-[240px] bg-white border-r border-slate-100 flex flex-col overflow-y-auto relative">
@@ -174,9 +173,12 @@ export function SecondarySidebar({
                   label={step.label}
                   completed={step.completed}
                   active={activeSecondary === step.label}
-                  disabled={step.disabled}
                   onClick={() => {
-                    setActiveSecondary(step.label);
+                    if (goToCreateTenantStep) {
+                      goToCreateTenantStep(step.label);
+                    } else {
+                      setActiveSecondary(step.label);
+                    }
                     setIsMobileMenuOpen(false);
                   }}
                 />

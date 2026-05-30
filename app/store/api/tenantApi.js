@@ -1,14 +1,22 @@
 import { api } from '../api';
 import { TAG_TYPES } from '../tags';
+import { parsePaginatedList } from '../../lib/paginated-list';
 
 export const tenantApi = api.injectEndpoints({
   endpoints: (builder) => ({
     listTenants: builder.query({
-      query: () => 'tenants',
+      query: ({ page = 1, perPage = 10 } = {}) => ({
+        url: 'tenants',
+        params: { page, per_page: perPage },
+      }),
+      transformResponse: (response) => parsePaginatedList(response),
       providesTags: (result) =>
-        result && Array.isArray(result) // Fallback checking for result array
+        result?.items?.length
           ? [
-              ...result.map(({ id }) => ({ type: TAG_TYPES.TENANT, id })),
+              ...result.items.map((tenant) => ({
+                type: TAG_TYPES.TENANT,
+                id: tenant.uuid ?? tenant.id,
+              })),
               { type: TAG_TYPES.TENANT, id: 'LIST' },
             ]
           : [{ type: TAG_TYPES.TENANT, id: 'LIST' }],

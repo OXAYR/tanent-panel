@@ -1,4 +1,3 @@
-import * as React from "react";
 import { TrendingUp, Users, ShieldCheck, Bell } from "lucide-react";
 
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

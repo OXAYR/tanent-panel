@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Users, ShieldCheck, TrendingUp } from "lucide-react";
 import { Card, Button, StatsCard, PageHeader } from "@/components/ui";
 import { MONTHS, GROWTH_VALUES } from "../constants";

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useOutletContext } from "react-router";
 import { LogHeader, LogTable } from "./components";
 import { SYSTEM_LOGS, AUDIT_LOGS } from "./constants";

@@ -1,4 +1,3 @@
-import * as React from "react";
 import { LoginBackground, WelcomeText, LoginForm } from "./components";
 import { APP_VERSION } from "./constants";
 
